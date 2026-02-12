@@ -17,8 +17,6 @@ This card requires the following custom frontend plugin (installable via HACS):
 ![Standard Layout](layout1.jpg)
 ![Compact Layout](layout2.jpg)
 
-*Note: Please upload your screenshot as `screenshot.png` to the repository to see it here.*
-
 ## Installation
 1. Ensure you have `button-card` installed.
 2. Create a new **Manual Card** in your Home Assistant dashboard.
