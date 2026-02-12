@@ -45,3 +45,5 @@ Each entry in the `devices` list supports:
 
 ## Author
 Piotr HA
+## License
+This project is licensed under the MIT License.
