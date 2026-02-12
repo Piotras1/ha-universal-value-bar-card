@@ -5,7 +5,7 @@ A versatile and highly customizable Home Assistant dashboard card built with `cu
 ## Features
 - **SVG Rendering:** Crisp and clear on any device.
 - **Segmented Gradients:** Visual representation of values using custom color palettes.
-- **Multi-Entity Support:** Display various sensors (Power, Temperature, Battery, etc.) in one compact card.
+- **Multi-Entity Support: Display as many sensors as you need (Power, Temperature, Battery, etc.) in a single, organized card. No limit on the number of devices.
 - **Two Layout Options:** Choose between a standard horizontal view or a more compact layout.
 - **Highly Configurable:** Adjust bar length, height, font styles, and spacing.
 
@@ -42,6 +42,7 @@ Each entry in the `devices` list supports:
 - `min` / `max`: Scale range for the bar.
 - `unit`: Measurement unit (e.g., W, °C, %).
 - `colors`: A comma-separated list of 5 color indices from the palette (e.g., `1,2,3,4,5`).
+- You can add any number of items to the devices list; the card will automatically adjust its height.
 
 ## Author
 Piotr HA
