@@ -14,7 +14,9 @@ This card requires the following custom frontend plugin (installable via HACS):
 - [button-card](https://github.com/custom-cards/button-card)
 
 ## Preview
-![Card Preview](screenshot.png)
+![Standard Layout](layout1.jpg)
+![Compact Layout](layout2.jpg)
+
 *Note: Please upload your screenshot as `screenshot.png` to the repository to see it here.*
 
 ## Installation
