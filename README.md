@@ -46,4 +46,4 @@ Each entry in the `devices` list supports:
 - `colors`: A comma-separated list of 5 color indices from the palette (e.g., `1,2,3,4,5`).
 
 ## Author
-Piotr
+Piotr HA
