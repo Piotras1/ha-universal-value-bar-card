@@ -1,0 +1,78 @@
+type: custom:button-card
+show_name: false
+show_icon: false
+show_state: false
+tap_action:
+  action: none
+variables:
+  # --- General Card Settings ---
+  bar_length: 230        # Width of the bars in pixels
+  bar_height: 12        # Height of the bars
+  show_values: true     # Set to false to hide value labels
+  card_layout: 1        # 1: Standard, 2: Compact
+  spacing: 44           # Vertical space between entities
+  font_size: 13         # Labels font size
+  font_style: 1         # 1: Normal, 2: Small-caps, 3: Monospace
+  
+  # --- Header Settings ---
+  header: "My Devices"  # Card title
+  header_font_size: 15
+  header_align: 1       # 1: Left, 2: Center, 3: Right
+  
+  # --- Color Palette (c1 to c10) ---
+  c1: "#4CAF50"
+  c2: "#8BC34A"
+  c3: "#DDDD00"
+  c4: "#FFA500"
+  c5: "#E53935"
+  c6: "#2196F3"
+  c7: "#03A9F4"
+  c8: "#00BCD4"
+  c9: "#FF9800"
+  c10: "#FF5722"
+  
+  # --- Device List ---
+  devices:
+    - entity: sensor.your_power_sensor          # Replace with your entity ID
+      name: "Power Usage"
+      min: 0
+      max: 5000
+      unit: "W"
+      colors: 1,2,3,4,5                         # Indices from the palette above
+    - entity: sensor.your_temperature_sensor    # Replace with your entity ID
+      name: "Living Room"
+      min: -10
+      max: 40
+      unit: "°C"
+      colors: 6,7,1,2,4
+    - entity: sensor.your_battery_sensor        # Replace with your entity ID
+      name: "Battery Level"
+      min: 0
+      max: 100
+      unit: "%"
+      colors: 5,4,3,2,1
+# --- Styles and Logic (Do not change unless you know what you're doing) ---      
+styles:
+  card:
+    - padding: 10px
+    - border-radius: 12px
+    - background: var(--card-background-color)
+  grid:
+    - grid-template-areas: "\"content\""
+    - grid-template-columns: 1fr
+custom_fields:
+  content: |
+    [[[
+      const barLength=variables.bar_length||230;const barHeight=variables.bar_height||12;const showValues=variables.show_values!==false;const cardLayout=variables.card_layout||1;const spacing=variables.spacing||44;const fontSize=variables.font_size||13;const fontStyle=variables.font_style||1;const header=variables.header||'';const headerFontSize=variables.header_font_size||15;const devices=variables.devices||[];let headeralign=variables.header_align||1;const valueFontSize=fontSize-1;let fontStyleCSS='';let fontFamilyCSS='';if(fontStyle===2){fontStyleCSS='font-variant-caps: small-caps;';}else if(fontStyle===3){fontFamilyCSS='font-family: monospace;';}
+      const colorPalette={1:variables.c1||'#4CAF50',2:variables.c2||'#8BC34A',3:variables.c3||'#DDDD00',4:variables.c4||'#FFA500',5:variables.c5||'#E53935',6:variables.c6||'#2196F3',7:variables.c7||'#03A9F4',8:variables.c8||'#00BCD4',9:variables.c9||'#FF9800',10:variables.c10||'#FF5722'};
+      const generateBar=(device,index,yOffset)=>{if(!device||!device.entity)return '';const min=device.min||0;const max=device.max||100;const state=states[device.entity]?.state||0;const value=parseFloat(state);const percentage=Math.min(Math.max((value-min)/(max-min)*100,0),100);const step=(max-min)/5;const unit=device.unit||'W';const colorIndices=(device.colors||'1,2,3,4,5').split(',').map(c=>c.trim());const colorScheme=colorIndices.map(idx=>colorPalette[idx]||colorPalette[1]);const gradientId=`barGradient_${index}`;const indicatorHeight=barHeight+2;
+      if(cardLayout===1){const barStartX=110;const valueTextX=barStartX+barLength+58;let labelsSVG='';const labelYOffset=yOffset+barHeight+13;for(let i=0;i<=5;i++){const val=(min+(step*i)).toFixed(0);const xPos=barStartX+(i*barLength/5);const anchor=i===0?"start":(i===5?"end":"middle");labelsSVG+=`<text x="${xPos}" y="${labelYOffset}" font-size="9" fill="var(--secondary-text-color)" opacity="0.7" text-anchor="${anchor}">${val}</text>`;}
+      const valueText=showValues?`<text x="${valueTextX}" y="${yOffset+barHeight-3}" font-size="${valueFontSize}" fill="var(--primary-text-color)" font-weight="bold" text-anchor="end" style="${fontStyleCSS}${fontFamilyCSS}">${value.toFixed(0)} ${unit}</text>`:'';const indicatorX=barStartX+(percentage/100*barLength);const gradientDef=`<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:${colorScheme[0]};" /><stop offset="20%" style="stop-color:${colorScheme[0]};" /><stop offset="20%" style="stop-color:${colorScheme[1]};" /><stop offset="40%" style="stop-color:${colorScheme[1]};" /><stop offset="40%" style="stop-color:${colorScheme[2]};" /><stop offset="60%" style="stop-color:${colorScheme[2]};" /><stop offset="60%" style="stop-color:${colorScheme[3]};" /><stop offset="80%" style="stop-color:${colorScheme[3]};" /><stop offset="80%" style="stop-color:${colorScheme[4]};" /><stop offset="100%" style="stop-color:${colorScheme[4]};" /></linearGradient>`;
+      return {gradient:gradientDef,bar:`<text x="4" y="${yOffset+barHeight-2}" font-size="${fontSize}" fill="var(--primary-text-color)" font-weight="500" text-anchor="start" style="${fontStyleCSS}${fontFamilyCSS}">${device.name||device.entity}</text><rect x="${barStartX}" y="${yOffset}" width="${barLength}" height="${barHeight}" rx="${barHeight/2}" fill="url(#${gradientId})"/><rect x="${indicatorX-1.5}" y="${yOffset-1}" width="3" height="${indicatorHeight}" fill="white" filter="drop-shadow(0 0 5px rgba(0,0,0,0.8))"/>${valueText}${labelsSVG}`};}
+      else{const barStartX=4;const barEndX=barStartX+barLength;let labelsSVG='';const labelYOffset=yOffset+barHeight+20;for(let i=0;i<=5;i++){const val=(min+(step*i)).toFixed(0);const xPos=barStartX+(i*barLength/5);const anchor=i===0?"start":(i===5?"end":"middle");labelsSVG+=`<text x="${xPos}" y="${labelYOffset}" font-size="9" fill="var(--secondary-text-color)" opacity="0.7" text-anchor="${anchor}">${val}</text>`;}
+      const valueText=showValues?`<text x="${barEndX}" y="${yOffset+1}" font-size="${valueFontSize}" fill="var(--primary-text-color)" font-weight="bold" text-anchor="end" style="${fontStyleCSS}${fontFamilyCSS}">${value.toFixed(0)} ${unit}</text>`:'';const indicatorX=barStartX+(percentage/100*barLength);const gradientDef=`<linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:${colorScheme[0]};" /><stop offset="20%" style="stop-color:${colorScheme[0]};" /><stop offset="20%" style="stop-color:${colorScheme[1]};" /><stop offset="40%" style="stop-color:${colorScheme[1]};" /><stop offset="40%" style="stop-color:${colorScheme[2]};" /><stop offset="60%" style="stop-color:${colorScheme[2]};" /><stop offset="60%" style="stop-color:${colorScheme[3]};" /><stop offset="80%" style="stop-color:${colorScheme[3]};" /><stop offset="80%" style="stop-color:${colorScheme[4]};" /><stop offset="100%" style="stop-color:${colorScheme[4]};" /></linearGradient>`;
+      return {gradient:gradientDef,bar:`<text x="${barStartX}" y="${yOffset+1}" font-size="${fontSize}" fill="var(--primary-text-color)" font-weight="500" text-anchor="start" style="${fontStyleCSS}${fontFamilyCSS}">${device.name||device.entity}</text>${valueText}<rect x="${barStartX}" y="${yOffset+7}" width="${barLength}" height="${barHeight}" rx="${barHeight/2}" fill="url(#${gradientId})"/><rect x="${indicatorX-1.5}" y="${yOffset+7}" width="3" height="${indicatorHeight+2}" fill="white" filter="drop-shadow(0 0 5px rgba(0,0,0,0.8))"/>${labelsSVG}`};}};
+      let gradients='';let bars='';let heightNeeded=0;let startOffset=17;let headerSVG='';let headeralign2='start';if(header&&header.trim()!==''){let alignPos=3;if(headeralign===3){alignPos=barLength===400?397:barLength-3;headeralign2='end';}if(headeralign===2){alignPos=barLength/2;headeralign2='middle';}if(headeralign===1){alignPos=3;}startOffset=headerFontSize+33;headerSVG=`<line x1="0" y1="28" x2="100%" y2="28" stroke="rgba(255,255,255,0.3)" stroke-width="1"/><text x="${alignPos}" y="${headerFontSize+5}" font-size="${headerFontSize}" fill="var(--primary-text-color)" font-weight="bold" text-anchor="${headeralign2}" style="${fontStyleCSS}${fontFamilyCSS}">${header}</text>`;}
+      devices.forEach((device,i)=>{if(device&&device.entity){const yOffset=startOffset+(i*spacing);const barData=generateBar(device,i,yOffset);gradients+=barData.gradient;bars+=barData.bar;heightNeeded=startOffset+((i+1)*spacing)-6;}});const svgWidth=cardLayout===1?110+barLength+60:barLength+8;
+      return `<svg width="100%" height="${heightNeeded}" viewBox="0 0 ${svgWidth} ${heightNeeded}" xmlns="http://www.w3.org/2000/svg"><defs>${gradients}</defs>${headerSVG}${bars}</svg>`;
+    ]]]
