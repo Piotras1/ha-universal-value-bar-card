@@ -20,7 +20,7 @@ This card requires the following custom frontend plugin (installable via HACS):
 ## Installation
 1. Ensure you have `button-card` installed.
 2. Create a new **Manual Card** in your Home Assistant dashboard.
-3. Copy the YAML code from this repository and paste it into the editor.
+3. Copy the code from [ha-universal-value-bar-card.yaml](ha-universal-value-bar-card.yaml).
 4. Customize the `variables` section to match your sensors.
 
 ## Configuration (Variables)
