@@ -1,5 +1,9 @@
 # Universal Value Bar Card (SVG)
 
+## Preview
+![Standard Layout](layout1.jpg)
+![Compact Layout](layout2.jpg)
+
 A versatile and highly customizable Home Assistant dashboard card built with `custom:button-card` and SVG. This card allows you to display multiple sensors with beautiful, segmented gradients and a clean, modern aesthetic.
 
 ## Features
@@ -12,10 +16,6 @@ A versatile and highly customizable Home Assistant dashboard card built with `cu
 ## Requirements
 This card requires the following custom frontend plugin (installable via HACS):
 - [button-card](https://github.com/custom-cards/button-card)
-
-## Preview
-![Standard Layout](layout1.jpg)
-![Compact Layout](layout2.jpg)
 
 ## Installation
 1. Ensure you have `button-card` installed.
