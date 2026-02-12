@@ -5,7 +5,7 @@ A versatile and highly customizable Home Assistant dashboard card built with `cu
 ## Features
 - **SVG Rendering:** Crisp and clear on any device.
 - **Segmented Gradients:** Visual representation of values using custom color palettes.
-- **Multi-Entity Support: Display as many sensors as you need (Power, Temperature, Battery, etc.) in a single, organized card. No limit on the number of devices.
+- Multi-Entity Support: Display as many sensors as you need (Power, Temperature, Battery, etc.) in a single, organized card. No limit on the number of devices.
 - **Two Layout Options:** Choose between a standard horizontal view or a more compact layout.
 - **Highly Configurable:** Adjust bar length, height, font styles, and spacing.
 
